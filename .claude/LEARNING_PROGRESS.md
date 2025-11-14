@@ -70,16 +70,32 @@
 - Invoices: 15件
 - Revenue: 12ヶ月分
 
+### ✅ Chapter 7: データのフェッチング
+- Server Componentsで`async/await`を使用してデータフェッチング
+- `fetchRevenue()`、`fetchLatestInvoices()`、`fetchCardData()`を実装
+- ダッシュボードページにCards、RevenueChart、LatestInvoicesを表示
+- ローカル環境で`.env.local`を使用してPostgres接続
+
+**学んだこと:**
+- Server Componentsはサーバー上でのみ実行される
+- データベースに直接接続できる（APIレイヤー不要）
+- `async/await`でデータフェッチングがシンプルに
+- 環境変数（`.env.local`）でローカル開発環境を設定
+
+**トラブルシューティング:**
+- ローカルでPOSTGRES_URLが必要
+- Vercel CLIで環境変数を取得（または手動設定）
+
 ---
 
 ## 🚧 現在の進行状況
 
-**現在地**: Chapter 7 - データのフェッチング
+**現在地**: Chapter 8 - 静的・動的レンダリング
 
 **次にやること:**
-- Server Componentsでデータフェッチング
-- データベースからのデータ取得
-- ダッシュボードにデータを表示
+- Static Rendering vs Dynamic Rendering
+- レンダリング戦略の使い分け
+- パフォーマンス最適化
 
 ---
 
@@ -88,7 +104,7 @@
 ### Phase 1: 基礎（続き）
 - [x] Chapter 5: ナビゲーション
 - [x] Chapter 6: データベースのセットアップ
-- [ ] Chapter 7: データのフェッチング
+- [x] Chapter 7: データのフェッチング
 
 ### Phase 2: 実践
 - [ ] Chapter 8: 静的・動的レンダリング
@@ -151,11 +167,13 @@
 | トピック | 理解度 | メモ |
 |---------|--------|------|
 | App Router | ⭐⭐⭐⭐☆ | ルーティング、レイアウト、ナビゲーションを理解 |
-| Server Components | ⭐⭐⭐☆☆ | 概念は理解、Client Componentとの使い分けも実践 |
+| Server Components | ⭐⭐⭐⭐☆ | サーバーサイドでのデータフェッチングを実践 |
+| Client Components | ⭐⭐⭐☆☆ | usePathnameなどのHooksを使用 |
 | Styling (Tailwind) | ⭐⭐⭐⭐☆ | 基本的なスタイリングは問題なし |
-| Database (Postgres) | ⭐⭐⭐☆☆ | セットアップとシードは完了、フェッチングはこれから |
-| Data Fetching | ⭐☆☆☆☆ | これから学習 |
+| Database (Postgres) | ⭐⭐⭐⭐☆ | セットアップ、シード、フェッチング完了 |
+| Data Fetching | ⭐⭐⭐⭐☆ | async/awaitでデータベースからデータ取得 |
 | Deployment (Vercel) | ⭐⭐⭐⭐☆ | GitHubからVercelへのデプロイを実践 |
+| Environment Variables | ⭐⭐⭐☆☆ | .env.localでローカル設定 |
 | Server Actions | ☆☆☆☆☆ | 未学習 |
 
 ---
