@@ -1,6 +1,6 @@
 # Next.js学習進捗
 
-最終更新: 2025-11-12
+最終更新: 2025-11-14
 
 ## 📚 完了したチャプター
 
@@ -38,24 +38,56 @@
 - layout.tsxとpage.tsxの役割
 - レイアウトの入れ子構造
 
+### ✅ Chapter 5: ページ間のナビゲーション
+- `<Link>`コンポーネントでクライアントサイドナビゲーション実装
+- `usePathname()`フックでアクティブなリンク表示
+- NavLinksコンポーネントをClient Componentに変更
+- `clsx`で条件付きスタイリング
+
+**学んだこと:**
+- Next.jsの自動コード分割とプリフェッチング
+- Client ComponentとServer Componentの使い分け
+- `<Link>`vs`<a>`タグの違い
+- ページ全体をリロードせずに高速ナビゲーション
+
+### ✅ Chapter 6: データベースのセットアップ
+- GitHubリポジトリの作成（https://github.com/makoto-teieki/nextjs-dashboard）
+- Vercelへのデプロイ
+- Neon Postgres（Serverless PostgreSQL）の作成
+- データベースシードスクリプトの実行（/seed）
+- 環境変数（POSTGRES_URL等）の設定
+
+**学んだこと:**
+- GitHub CLIの使い方
+- Vercelでのデプロイフロー
+- Neon Postgresの統合
+- データベーススキーマの作成（Users, Customers, Invoices, Revenue）
+- bcryptでのパスワードハッシュ化
+
+**作成したデータ:**
+- Users: 1件
+- Customers: 6件
+- Invoices: 15件
+- Revenue: 12ヶ月分
+
 ---
 
 ## 🚧 現在の進行状況
 
-**現在地**: Chapter 5 - ページ間のナビゲーション
+**現在地**: Chapter 7 - データのフェッチング
 
 **次にやること:**
-- `<Link>`コンポーネントの使用
-- アクティブなリンクの表示
-- 自動コード分割とプリフェッチの理解
+- Server Componentsでデータフェッチング
+- データベースからのデータ取得
+- ダッシュボードにデータを表示
 
 ---
 
 ## 📝 今後の学習予定
 
 ### Phase 1: 基礎（続き）
-- [ ] Chapter 5: ナビゲーション
-- [ ] Chapter 6: データベースのセットアップ
+- [x] Chapter 5: ナビゲーション
+- [x] Chapter 6: データベースのセットアップ
 - [ ] Chapter 7: データのフェッチング
 
 ### Phase 2: 実践
@@ -88,7 +120,8 @@
 - **レイアウト**: 複数ページで共有されるUI
 
 ### つまづいたポイント
-（ここに学習中に困ったことを記録）
+- **環境変数のプレフィックス**: NeonデータベースをVercelプロジェクトに接続する際、環境変数のプレフィックスを`POSTGRES`に設定する必要があった（デフォルトは`STORAGE`）
+- **シードスクリプト**: `app/seed/route.ts`が`POSTGRES_URL`を使用しているため、正しいプレフィックスが重要
 
 ### 参考にしたリソース
 - [Next.js Learn Course](https://nextjs.org/learn)
@@ -99,7 +132,7 @@
 ## 🎯 学習目標
 
 ### 短期目標（1-2週間）
-- [ ] データベース連携までの実装完了
+- [x] データベース連携までの実装完了
 - [ ] Server ActionsとClient Componentsの使い分けを理解
 
 ### 中期目標（1ヶ月）
@@ -108,7 +141,7 @@
 
 ### 長期目標
 - [ ] オリジナル機能の追加
-- [ ] 本番デプロイ（Vercel）
+- [x] 本番デプロイ（Vercel）
 - [ ] 別のプロジェクトでNext.jsを使えるレベルに
 
 ---
@@ -117,10 +150,12 @@
 
 | トピック | 理解度 | メモ |
 |---------|--------|------|
-| App Router | ⭐⭐⭐☆☆ | 基本は理解、複雑なルーティングはこれから |
-| Server Components | ⭐⭐☆☆☆ | 概念は理解、実践的な使い分けが必要 |
+| App Router | ⭐⭐⭐⭐☆ | ルーティング、レイアウト、ナビゲーションを理解 |
+| Server Components | ⭐⭐⭐☆☆ | 概念は理解、Client Componentとの使い分けも実践 |
 | Styling (Tailwind) | ⭐⭐⭐⭐☆ | 基本的なスタイリングは問題なし |
+| Database (Postgres) | ⭐⭐⭐☆☆ | セットアップとシードは完了、フェッチングはこれから |
 | Data Fetching | ⭐☆☆☆☆ | これから学習 |
+| Deployment (Vercel) | ⭐⭐⭐⭐☆ | GitHubからVercelへのデプロイを実践 |
 | Server Actions | ☆☆☆☆☆ | 未学習 |
 
 ---
