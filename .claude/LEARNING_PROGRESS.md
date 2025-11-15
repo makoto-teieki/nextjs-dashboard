@@ -1,6 +1,6 @@
 # Next.js学習進捗
 
-最終更新: 2025-11-14
+最終更新: 2025-11-15
 
 ## 📚 完了したチャプター
 
@@ -86,16 +86,33 @@
 - ローカルでPOSTGRES_URLが必要
 - Vercel CLIで環境変数を取得（または手動設定）
 
+### ✅ Chapter 8: 静的・動的レンダリング
+- 静的レンダリング（Static Rendering）と動的レンダリング（Dynamic Rendering）の違いを理解
+- `fetchRevenue()`に3秒の遅延を追加してパフォーマンス問題を再現
+- 遅いデータフェッチがページ全体をブロックする問題を体験（7.6秒の遅延）
+
+**学んだこと:**
+- **静的レンダリング**: ビルド時にレンダリング、結果をキャッシュ、高速・SEO向上
+- **動的レンダリング**: リクエスト時にレンダリング、リアルタイムデータ・パーソナライズに最適
+- **データフェッチングのウォーターフォール問題**: 「アプリケーションは最も遅いデータフェッチと同じ速度でしか動かない」
+- ダッシュボードのような頻繁に更新されるデータには動的レンダリングが適している
+- Next.jsは動的関数（cookies、headers、searchParams）を検出すると自動的に動的レンダリングに切り替わる
+
+**パフォーマンス測定:**
+- `fetchRevenue()`の遅延: 3秒
+- ダッシュボードページ全体の読み込み: 7.6秒
+- 他のデータフェッチ（`fetchLatestInvoices()`、`fetchCardData()`）も順次実行されている
+
 ---
 
 ## 🚧 現在の進行状況
 
-**現在地**: Chapter 8 - 静的・動的レンダリング
+**現在地**: Chapter 9 - ストリーミング
 
 **次にやること:**
-- Static Rendering vs Dynamic Rendering
-- レンダリング戦略の使い分け
-- パフォーマンス最適化
+- Streaming（ストリーミング）の概念を学ぶ
+- React Suspenseを使った部分的レンダリング
+- データフェッチングのウォーターフォール問題を解決
 
 ---
 
@@ -107,7 +124,7 @@
 - [x] Chapter 7: データのフェッチング
 
 ### Phase 2: 実践
-- [ ] Chapter 8: 静的・動的レンダリング
+- [x] Chapter 8: 静的・動的レンダリング
 - [ ] Chapter 9: ストリーミング
 - [ ] Chapter 10: Partial Prerendering
 - [ ] Chapter 11: 検索とページネーション
@@ -172,8 +189,12 @@
 | Styling (Tailwind) | ⭐⭐⭐⭐☆ | 基本的なスタイリングは問題なし |
 | Database (Postgres) | ⭐⭐⭐⭐☆ | セットアップ、シード、フェッチング完了 |
 | Data Fetching | ⭐⭐⭐⭐☆ | async/awaitでデータベースからデータ取得 |
+| Static Rendering | ⭐⭐⭐⭐☆ | ビルド時レンダリングの概念を理解 |
+| Dynamic Rendering | ⭐⭐⭐⭐☆ | リクエスト時レンダリングの概念を理解 |
+| Performance | ⭐⭐⭐☆☆ | ウォーターフォール問題を体験 |
 | Deployment (Vercel) | ⭐⭐⭐⭐☆ | GitHubからVercelへのデプロイを実践 |
 | Environment Variables | ⭐⭐⭐☆☆ | .env.localでローカル設定 |
+| Streaming | ☆☆☆☆☆ | 未学習（次のChapter） |
 | Server Actions | ☆☆☆☆☆ | 未学習 |
 
 ---
