@@ -161,16 +161,48 @@
 - 検索時にページ番号を1にリセット
 - ブックマーク可能なURL
 
+### ✅ Chapter 12: データの変更（Mutating Data）
+- Server Actionsを使ったデータ変更の実装
+- `'use server'`ディレクティブでServer Actionsを定義
+- Zodを使ったフォームバリデーション
+- 請求書の作成、更新、削除機能
+- `revalidatePath`でキャッシュの再検証
+- `redirect`でページ遷移
+
+**学んだこと:**
+- **Server Actions**: サーバー上で実行される非同期関数。`'use server'`で定義
+- **フォームアクション**: `<form action={serverAction}>`でServer Actionsを呼び出せる
+- **データベース変更**: Server ActionsからPostgreSQLに直接アクセス可能
+- **Zodバリデーション**: `z.coerce.number()`で型変換、`z.enum()`で選択肢を制限
+- **revalidatePath**: 指定したパスのキャッシュを再検証してUIを更新
+- **redirect**: Server Actionからページ遷移を実行
+- **bind()の活用**: `updateInvoice.bind(null, id)`でIDを事前に渡す
+
+**実装内容:**
+- `/app/lib/actions.ts`: Server Actionsの定義（createInvoice, updateInvoice, deleteInvoice）
+- `/app/dashboard/invoices/create/page.tsx`: 請求書作成ページ
+- `/app/dashboard/invoices/[id]/edit/page.tsx`: 請求書編集ページ（動的ルート）
+- `/app/ui/invoices/create-form.tsx`: action属性にcreateInvoiceを設定
+- `/app/ui/invoices/edit-form.tsx`: action属性にupdateInvoiceWithIdを設定
+- `/app/ui/invoices/buttons.tsx`: UpdateとDeleteボタンの実装
+
+**機能:**
+- 請求書作成フォーム（顧客選択、金額入力、ステータス選択）
+- 請求書編集フォーム（既存データをdefaultValueで表示）
+- 削除ボタン（formでdeleteInvoiceをラップ）
+- 作成・更新後に/dashboard/invoicesにリダイレクト
+- 動的ルート`[id]`でIDベースの編集ページ
+
 ---
 
 ## 🚧 現在の進行状況
 
-**現在地**: Chapter 12 - データの変更
+**現在地**: Chapter 13 - エラーハンドリング
 
 **次にやること:**
-- Server Actionsの概念を学ぶ
-- フォームデータの処理
-- データベースの更新・削除操作
+- バリデーションエラーの処理
+- try-catchでエラーハンドリング
+- error.tsxとnot-found.tsxの実装
 
 ---
 
@@ -185,7 +217,7 @@
 - [x] Chapter 8: 静的・動的レンダリング
 - [x] Chapter 9: ストリーミング
 - [x] Chapter 11: 検索とページネーション
-- [ ] Chapter 12: データの変更
+- [x] Chapter 12: データの変更
 - [ ] Chapter 13: エラーハンドリング
 
 ### Phase 3: 高度な機能
@@ -223,7 +255,7 @@
 
 ### 短期目標（1-2週間）
 - [x] データベース連携までの実装完了
-- [ ] Server ActionsとClient Componentsの使い分けを理解
+- [x] Server ActionsとClient Componentsの使い分けを理解
 
 ### 中期目標（1ヶ月）
 - [ ] 公式チュートリアルの完走
@@ -257,7 +289,10 @@
 | Debouncing | ⭐⭐⭐⭐☆ | use-debounceでパフォーマンス最適化 |
 | Deployment (Vercel) | ⭐⭐⭐⭐☆ | GitHubからVercelへのデプロイを実践 |
 | Environment Variables | ⭐⭐⭐☆☆ | .env.localでローカル設定 |
-| Server Actions | ☆☆☆☆☆ | 未学習（次のChapter） |
+| Server Actions | ⭐⭐⭐⭐☆ | 'use server'でサーバー関数を定義 |
+| Zod Validation | ⭐⭐⭐⭐☆ | フォームデータのスキーマ検証 |
+| Data Mutation | ⭐⭐⭐⭐☆ | 作成・更新・削除をServer Actionsで実装 |
+| Dynamic Routes | ⭐⭐⭐⭐☆ | [id]で動的ルートを実装 |
 
 ---
 
