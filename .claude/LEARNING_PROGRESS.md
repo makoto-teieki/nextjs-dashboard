@@ -1,6 +1,6 @@
 # Next.js学習進捗
 
-最終更新: 2025-11-15
+最終更新: 2025-11-16
 
 ## 📚 完了したチャプター
 
@@ -103,16 +103,44 @@
 - ダッシュボードページ全体の読み込み: 7.6秒
 - 他のデータフェッチ（`fetchLatestInvoices()`、`fetchCardData()`）も順次実行されている
 
+### ✅ Chapter 9: ストリーミング
+- ストリーミング（Streaming）を使ってデータフェッチングのウォーターフォール問題を解決
+- `loading.tsx`でページレベルのローディングUI実装
+- Route Groups `(overview)`を使って`loading.tsx`のスコープを限定
+- データフェッチをコンポーネント内に移動（`CardWrapper`, `RevenueChart`, `LatestInvoices`）
+- React Suspenseで個別コンポーネントをラップしてストリーミング実装
+- RevenueChartとLatestInvoicesのコンテンツのコメントを解除して表示
+
+**学んだこと:**
+- **ストリーミング**: ページを小さなチャンク（chunk）に分割して順次レンダリング
+- **loading.tsx**: Next.jsが自動的にSuspenseでラップする特殊ファイル
+- **Route Groups**: `(folder)`形式でURLパスに影響を与えずにファイルを整理
+- **React Suspense**: コンポーネントレベルでローディング状態を管理し、細かい制御が可能
+- **並列データフェッチ**: 各コンポーネントが独立してデータフェッチするため、全体のパフォーマンスが向上
+- **スケルトンUI**: ユーザーにコンテンツが読み込み中であることを視覚的に伝える
+
+**実装内容:**
+- `/app/dashboard/(overview)/loading.tsx`: ページレベルのローディング
+- `/app/dashboard/(overview)/page.tsx`: Suspenseでコンポーネントをラップ
+- `/app/ui/dashboard/cards.tsx`: CardWrapperでfetchCardData()を呼び出し
+- `/app/ui/dashboard/revenue-chart.tsx`: コンポーネント内でfetchRevenue()を呼び出し、チャート表示
+- `/app/ui/dashboard/latest-invoices.tsx`: コンポーネント内でfetchLatestInvoices()を呼び出し、リスト表示
+
+**パフォーマンス改善:**
+- **ページ全体の読み込み時間**: 7.6秒 → **3.2秒** (58%改善！)
+- 遅い`RevenueChart`（3秒）が他のコンポーネントをブロックしなくなった
+- ユーザーは即座にページタイトルと、準備できたコンポーネントから順に見ることができる
+- 視覚的フィードバック（スケルトンUI）でUX向上
+
 ---
 
 ## 🚧 現在の進行状況
 
-**現在地**: Chapter 9 - ストリーミング
+**現在地**: Chapter 10 - Partial Prerendering
 
 **次にやること:**
-- Streaming（ストリーミング）の概念を学ぶ
-- React Suspenseを使った部分的レンダリング
-- データフェッチングのウォーターフォール問題を解決
+- Partial Prerendering（部分的プリレンダリング）の概念を学ぶ
+- 静的コンテンツと動的コンテンツの組み合わせ
 
 ---
 
@@ -125,7 +153,7 @@
 
 ### Phase 2: 実践
 - [x] Chapter 8: 静的・動的レンダリング
-- [ ] Chapter 9: ストリーミング
+- [x] Chapter 9: ストリーミング
 - [ ] Chapter 10: Partial Prerendering
 - [ ] Chapter 11: 検索とページネーション
 - [ ] Chapter 12: データの変更
@@ -191,10 +219,12 @@
 | Data Fetching | ⭐⭐⭐⭐☆ | async/awaitでデータベースからデータ取得 |
 | Static Rendering | ⭐⭐⭐⭐☆ | ビルド時レンダリングの概念を理解 |
 | Dynamic Rendering | ⭐⭐⭐⭐☆ | リクエスト時レンダリングの概念を理解 |
-| Performance | ⭐⭐⭐☆☆ | ウォーターフォール問題を体験 |
+| Performance | ⭐⭐⭐⭐☆ | ストリーミングで大幅改善 |
+| Streaming | ⭐⭐⭐⭐☆ | React Suspenseとloading.tsxを実装 |
+| React Suspense | ⭐⭐⭐⭐☆ | コンポーネントレベルのローディング管理 |
+| Route Groups | ⭐⭐⭐⭐☆ | (folder)でスコープ限定 |
 | Deployment (Vercel) | ⭐⭐⭐⭐☆ | GitHubからVercelへのデプロイを実践 |
 | Environment Variables | ⭐⭐⭐☆☆ | .env.localでローカル設定 |
-| Streaming | ☆☆☆☆☆ | 未学習（次のChapter） |
 | Server Actions | ☆☆☆☆☆ | 未学習 |
 
 ---
