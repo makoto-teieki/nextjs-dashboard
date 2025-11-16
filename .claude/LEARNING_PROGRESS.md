@@ -132,15 +132,45 @@
 - ユーザーは即座にページタイトルと、準備できたコンポーネントから順に見ることができる
 - 視覚的フィードバック（スケルトンUI）でUX向上
 
+### ✅ Chapter 11: 検索とページネーション
+- URL検索パラメータを使った検索機能の実装
+- `useSearchParams`, `usePathname`, `useRouter`フックの活用
+- `useDebouncedCallback`でデバウンス処理（300ms）
+- ページネーション機能の実装
+- Next.js 15対応（searchParamsのawait）
+
+**学んだこと:**
+- **URL検索パラメータの利点**: 共有可能、SSR対応、分析容易
+- **useSearchParams**: 現在のURLパラメータにアクセス
+- **usePathname**: 現在のURLパス名を取得
+- **useRouter**: クライアントコンポーネントでプログラム的にナビゲーション
+- **デバウンス**: ユーザー入力後の不要なリクエストを削減
+- **URLSearchParams**: URLパラメータの操作
+- **Next.js 15の変更**: searchParamsはPromiseとしてawaitする必要がある
+
+**実装内容:**
+- `/app/dashboard/invoices/page.tsx`: Server Componentで検索とページネーションを処理
+- `/app/ui/search.tsx`: Client Componentで検索入力とURL更新
+- `/app/ui/invoices/pagination.tsx`: ページネーションUI
+- `use-debounce`パッケージの導入
+
+**機能:**
+- リアルタイム検索（300msデバウンス）
+- URLベースのページネーション
+- 検索クエリとページ番号の同期
+- 検索時にページ番号を1にリセット
+- ブックマーク可能なURL
+
 ---
 
 ## 🚧 現在の進行状況
 
-**現在地**: Chapter 10 - Partial Prerendering
+**現在地**: Chapter 12 - データの変更
 
 **次にやること:**
-- Partial Prerendering（部分的プリレンダリング）の概念を学ぶ
-- 静的コンテンツと動的コンテンツの組み合わせ
+- Server Actionsの概念を学ぶ
+- フォームデータの処理
+- データベースの更新・削除操作
 
 ---
 
@@ -154,8 +184,7 @@
 ### Phase 2: 実践
 - [x] Chapter 8: 静的・動的レンダリング
 - [x] Chapter 9: ストリーミング
-- [ ] Chapter 10: Partial Prerendering
-- [ ] Chapter 11: 検索とページネーション
+- [x] Chapter 11: 検索とページネーション
 - [ ] Chapter 12: データの変更
 - [ ] Chapter 13: エラーハンドリング
 
@@ -223,9 +252,12 @@
 | Streaming | ⭐⭐⭐⭐☆ | React Suspenseとloading.tsxを実装 |
 | React Suspense | ⭐⭐⭐⭐☆ | コンポーネントレベルのローディング管理 |
 | Route Groups | ⭐⭐⭐⭐☆ | (folder)でスコープ限定 |
+| URL Search Params | ⭐⭐⭐⭐☆ | 検索とページネーションをURL管理 |
+| Client Hooks (useSearchParams等) | ⭐⭐⭐⭐☆ | useSearchParams, usePathname, useRouter |
+| Debouncing | ⭐⭐⭐⭐☆ | use-debounceでパフォーマンス最適化 |
 | Deployment (Vercel) | ⭐⭐⭐⭐☆ | GitHubからVercelへのデプロイを実践 |
 | Environment Variables | ⭐⭐⭐☆☆ | .env.localでローカル設定 |
-| Server Actions | ☆☆☆☆☆ | 未学習 |
+| Server Actions | ☆☆☆☆☆ | 未学習（次のChapter） |
 
 ---
 
