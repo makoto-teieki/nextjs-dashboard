@@ -193,16 +193,42 @@
 - 作成・更新後に/dashboard/invoicesにリダイレクト
 - 動的ルート`[id]`でIDベースの編集ページ
 
+### ✅ Chapter 13: エラーハンドリング
+- try-catchでデータベースエラーをキャッチ
+- `error.tsx`で予期しないエラーをキャッチ
+- `not-found.tsx`で404エラーを処理
+- `notFound()`関数で意図的に404をトリガー
+
+**学んだこと:**
+- **try-catch**: Server Actionsでデータベースエラーをキャッチしてメッセージを返す
+- **error.tsx**: ルートセグメント内の予期しないエラーをキャッチする特殊ファイル
+- **Client Component**: error.tsxは`'use client'`が必要（resetなどのインタラクティブ機能のため）
+- **reset関数**: エラーバウンダリをリセットしてコンポーネントを再レンダリング
+- **not-found.tsx**: 404エラー用のカスタムUI
+- **notFound()関数**: next/navigationからインポートして404をトリガー
+- **Error Boundary**: error.tsxは子コンポーネントのエラーをキャッチ（ページ自体のエラーは親のerror.tsxでキャッチ）
+
+**実装内容:**
+- `/app/lib/actions.ts`: 全てのServer Actionsにtry-catchを追加
+- `/app/dashboard/invoices/error.tsx`: 請求書ページのエラーUI
+- `/app/dashboard/invoices/[id]/edit/not-found.tsx`: 請求書編集ページの404 UI
+- `/app/dashboard/invoices/[id]/edit/page.tsx`: `notFound()`で存在しない請求書をチェック
+
+**エラーハンドリングの階層:**
+1. データベースエラー → try-catchでキャッチ → エラーメッセージを返す
+2. 予期しないエラー → error.tsxでキャッチ → ユーザーに「Try again」ボタンを表示
+3. リソース不在 → notFound()をトリガー → not-found.tsxで404 UIを表示
+
 ---
 
 ## 🚧 現在の進行状況
 
-**現在地**: Chapter 13 - エラーハンドリング
+**現在地**: Chapter 14 - フォームバリデーション
 
 **次にやること:**
-- バリデーションエラーの処理
-- try-catchでエラーハンドリング
-- error.tsxとnot-found.tsxの実装
+- クライアントサイドバリデーション
+- サーバーサイドバリデーション
+- useFormStateの使用
 
 ---
 
@@ -218,7 +244,7 @@
 - [x] Chapter 9: ストリーミング
 - [x] Chapter 11: 検索とページネーション
 - [x] Chapter 12: データの変更
-- [ ] Chapter 13: エラーハンドリング
+- [x] Chapter 13: エラーハンドリング
 
 ### Phase 3: 高度な機能
 - [ ] Chapter 14: フォームバリデーション
@@ -293,6 +319,8 @@
 | Zod Validation | ⭐⭐⭐⭐☆ | フォームデータのスキーマ検証 |
 | Data Mutation | ⭐⭐⭐⭐☆ | 作成・更新・削除をServer Actionsで実装 |
 | Dynamic Routes | ⭐⭐⭐⭐☆ | [id]で動的ルートを実装 |
+| Error Handling | ⭐⭐⭐⭐☆ | try-catch、error.tsx、not-found.tsx |
+| Error Boundary | ⭐⭐⭐⭐☆ | error.tsxで予期しないエラーをキャッチ |
 
 ---
 
