@@ -33,9 +33,7 @@ export async function createInvoice(formData: FormData) {
       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
   } catch (error) {
-    return {
-      message: 'Database Error: Failed to create invoice.',
-    };
+    throw new Error('Database Error: Failed to create invoice.');
   }
 
   revalidatePath('/dashboard/invoices');
@@ -58,9 +56,7 @@ export async function updateInvoice(id: string, formData: FormData) {
       WHERE id = ${id}
     `;
   } catch (error) {
-    return {
-      message: 'Database Error: Failed to update invoice.',
-    };
+    throw new Error('Database Error: Failed to update invoice.');
   }
 
   revalidatePath('/dashboard/invoices');

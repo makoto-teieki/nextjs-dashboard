@@ -3,7 +3,11 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev --turbopack",
-    "start": "next start"
+    "start": "next start",
+    "type-check": "tsc --noEmit",
+    "validate": "pnpm run type-check",
+    "pre-commit": "pnpm run validate",
+    "prepare": "husky"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -23,15 +27,25 @@
     "zod": "^3.25.17"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "22.10.7",
     "@types/react": "19.0.7",
-    "@types/react-dom": "19.0.3"
+    "@types/react-dom": "19.0.3",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "^16.0.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
       "bcrypt",
       "sharp"
+    ]
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix"
     ]
   }
 }
