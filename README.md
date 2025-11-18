@@ -41,10 +41,13 @@ pnpm build
 
 このプロジェクトはClaude Codeと一緒に開発しています。
 
-### 新しいセッション開始時
+### セッション開始時の自動設定
 
-```
-「.claude/README.mdを参照して、プロジェクトの現状を把握してください」
-```
+**`.clinerules`** ファイルにより、Claude Codeは**自動的に**以下を実行します：
+- `.claude/README.md` を読んでドキュメント構造を把握
+- `LEARNING_PROGRESS.md` で学習進捗を確認
+- プロジェクト固有のルールとガイドラインを適用
+
+**何も指示しなくても、Claudeはプロジェクトの文脈を理解した状態で開始します。**
 
 詳細は [.claude/README.md](./.claude/README.md) を参照してください。
