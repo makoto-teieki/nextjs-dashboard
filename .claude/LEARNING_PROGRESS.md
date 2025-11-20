@@ -402,11 +402,46 @@
 - [x] Chapter 15: 認証
 - [x] Chapter 16: メタデータ
 
-### Phase 4: 独自実装
-- [ ] カスタム機能の追加
-- [ ] リファクタリング
-- [ ] テストの追加
-- [ ] パフォーマンス最適化
+### Phase 4A: テスティング基盤の構築 ⭐ 最優先
+- [ ] Jest + React Testing Libraryのセットアップ
+- [ ] Utilityファイル（lib/utils.ts等）のユニットテスト
+- [ ] Server Actionsのテスト
+- [ ] Zodバリデーションのテスト
+- [ ] Formコンポーネントのテスト
+- [ ] ログインフローの統合テスト
+- [ ] CRUD操作の統合テスト
+- [ ] Playwrightのセットアップ（E2E）
+- [ ] 主要ユーザーフローのE2Eテスト
+
+### Phase 4B: コード品質の向上
+- [ ] TypeScript strict modeの有効化
+- [ ] Type-safe環境変数（zod + t3-env）
+- [ ] 共通ロジックの抽出とカスタムフック作成
+- [ ] コンポーネントの適切な分割
+- [ ] セルフコードレビューチェックリスト作成
+- [ ] PRテンプレートの作成
+
+### Phase 4C: パフォーマンス最適化
+- [ ] Lighthouse監査の実施と改善
+- [ ] Bundle size分析（@next/bundle-analyzer）
+- [ ] Core Web Vitalsの測定と最適化
+- [ ] Dynamic Importsの活用
+- [ ] 適切なMemoization（useMemo, useCallback）
+
+### Phase 4D: 機能拡張
+- [ ] ダークモード実装
+- [ ] Toast通知システムの追加
+- [ ] データエクスポート機能（CSV/PDF）
+- [ ] フィルタリング機能の強化
+- [ ] バルク操作（複数選択・削除）
+- [ ] 国際化（i18n）対応
+
+### Phase 4E: DevOps & セキュリティ
+- [ ] GitHub Actionsでのテスト自動化
+- [ ] E2Eテストの自動実行
+- [ ] 依存関係の脆弱性チェック（Dependabot）
+- [ ] CSP（Content Security Policy）の設定
+- [ ] Rate limitingの実装
 
 ---
 
