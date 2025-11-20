@@ -1,6 +1,6 @@
 # Next.js学習進捗
 
-最終更新: 2025-11-18
+最終更新: 2025-11-20
 
 > **📚 他のドキュメント**: プロジェクト全体のドキュメント一覧は [README.md](./README.md) を参照してください。
 
@@ -221,16 +221,165 @@
 2. 予期しないエラー → error.tsxでキャッチ → ユーザーに「Try again」ボタンを表示
 3. リソース不在 → notFound()をトリガー → not-found.tsxで404 UIを表示
 
+### ✅ Chapter 14: アクセシビリティの向上とフォームバリデーション
+- Server-Sideバリデーションの強化
+- `useActionState`フックでフォーム状態を管理
+- ARIA属性を使ったアクセシブルなエラー表示
+- Zodバリデーションにカスタムエラーメッセージを追加
+
+**学んだこと:**
+- **useActionState**: React 19の新しいフック（旧useFormState）でフォームの状態とアクションを管理
+- **safeParse()**: Zodの`safeParse()`でグレースフルなエラーハンドリング（`parse()`と違い例外を投げない）
+- **ARIA属性**: アクセシビリティのための重要な属性
+  - `aria-describedby`: フィールドとエラーメッセージを関連付け
+  - `aria-live="polite"`: スクリーンリーダーに変更を通知（割り込まない）
+  - `aria-atomic="true"`: 領域全体を読み上げる
+- **フィールドバリデーション**: 各フィールドに対して個別のエラーメッセージを表示
+- **Zodカスタムメッセージ**: `invalid_type_error`、`message`オプションでユーザーフレンドリーなエラー
+- **State型**: Server Actionsの戻り値の型定義で、エラー情報を構造化
+
+**実装内容:**
+- `/app/lib/actions.ts`:
+  - State型を定義（errors, message）
+  - createInvoiceとupdateInvoiceにprevStateパラメータを追加
+  - safeParse()でバリデーションエラーをキャッチ
+  - Zodスキーマにカスタムエラーメッセージを追加
+- `/app/ui/invoices/create-form.tsx`:
+  - `'use client'`を追加
+  - useActionStateでstateを管理
+  - 各フィールドにaria-describedbyを追加
+  - エラーメッセージを表示するdivを追加
+- `/app/ui/invoices/edit-form.tsx`:
+  - useActionStateでstateを管理
+  - 各フィールドにエラー表示を実装
+
+**バリデーションルール:**
+- **顧客**: 必須選択
+- **金額**: $0より大きい数値
+- **ステータス**: "pending"または"paid"
+
+**アクセシビリティ向上:**
+- スクリーンリーダーがエラーを読み上げられる
+- キーボードナビゲーションに対応
+- エラーメッセージが視覚的にわかりやすい（赤色テキスト）
+
+### ✅ Chapter 15: 認証機能（NextAuth.js）
+- NextAuth.js v5（beta）のセットアップ
+- Credentials Providerでメール・パスワード認証
+- Middlewareでルート保護
+- ログイン・ログアウト機能の実装
+
+**学んだこと:**
+- **NextAuth.js**: 認証の複雑さを抽象化し、セッション管理、ログイン/ログアウトフローを統一的に提供
+- **Middleware**: リクエストごとに認証状態をチェックし、レンダリング前にルートを保護
+- **Credentials Provider**: メール・パスワードによる認証方式
+- **bcrypt**: パスワードのハッシュ化（`bcrypt.compare()`で検証）
+- **authorized callback**: リクエストの認可判定を行う
+  - `auth?.user`でログイン状態を確認
+  - ログインが必要なルートへの未認証アクセスをブロック
+  - ログイン済みユーザーを適切にリダイレクト
+- **AuthError**: NextAuth.jsのエラー型（CredentialsSigninなど）
+- **Server Actions**: `signIn('credentials', formData)`と`signOut()`
+- **セッション管理**: NextAuth.jsがクッキーで自動的にセッションを管理
+
+**実装内容:**
+- `auth.config.ts`: 認証設定
+  - pagesでカスタムログインページ（/login）を指定
+  - authorized callbackでルート保護ロジック
+  - /dashboardへの未認証アクセスをブロック
+- `middleware.ts`: Next.jsミドルウェア
+  - NextAuth(authConfig).authでミドルウェアをエクスポート
+  - matcherで静的ファイルを除外
+- `auth.ts`: メイン認証ロジック
+  - Credentials Providerの設定
+  - getUser()でデータベースからユーザー取得
+  - Zodでメール・パスワードをバリデーション
+  - bcrypt.compare()でパスワード検証
+  - auth, signIn, signOutをエクスポート
+- `/app/lib/actions.ts`:
+  - authenticate()関数を追加
+  - AuthErrorをハンドリング
+  - CredentialsSigninエラーで「Invalid credentials.」を返す
+- `/app/ui/login-form.tsx`:
+  - `'use client'`を追加
+  - useActionState(authenticate, undefined)で状態管理
+  - isPendingでボタンの無効化
+  - errorMessageをaria-live="polite"で表示
+- `/app/ui/dashboard/sidenav.tsx`:
+  - signOut()をインラインServer Actionとして実装
+  - formのactionに`async () => { 'use server'; await signOut(); }`
+
+**認証フロー:**
+1. ユーザーがログインフォームに入力
+2. authenticate()がcredentialsをsignIn()に渡す
+3. auth.tsのauthorize()でバリデーション
+4. bcrypt.compare()でパスワード照合
+5. 成功ならユーザーオブジェクトを返す
+6. NextAuth.jsがセッションを作成
+7. Middlewareが後続リクエストで認証状態をチェック
+
+**テスト認証情報:**
+- Email: `user@nextmail.com`
+- Password: `123456`
+
+### ✅ Chapter 16: メタデータ
+- Next.js Metadata APIの実装
+- タイトルテンプレートでページタイトルを効率的に管理
+- ページごとのメタデータ設定
+- SEO最適化
+
+**学んだこと:**
+- **Metadata API**: Next.jsの型安全なメタデータ管理システム
+- **Config-based metadata**: layout.tsxやpage.tsxから`metadata` objectをexport
+- **Title template**: `%s | Acme Dashboard` で各ページのタイトルを自動生成
+  - `%s` がページ固有のタイトルに置換される
+  - ルートレイアウトで1回定義すれば、各ページは`title: 'Page Name'`だけでOK
+- **metadataBase**: Open GraphやCanonical URLのベースURL設定
+- **SEOへの影響**:
+  - 検索エンジンがページ内容を理解しやすくなる
+  - ソーシャルメディアでのシェア時の表示改善
+  - ブラウザタブでのわかりやすい表示
+
+**実装内容:**
+- `/app/layout.tsx`:
+  - titleテンプレート: `'%s | Acme Dashboard'`
+  - デフォルトタイトル: `'Acme Dashboard'`
+  - description: アプリの概要
+  - metadataBase: ベースURL
+- 各ページにメタデータを追加:
+  - `/app/login/page.tsx`: `title: 'Login'` → "Login | Acme Dashboard"
+  - `/app/dashboard/(overview)/page.tsx`: `title: 'Dashboard'` → "Dashboard | Acme Dashboard"
+  - `/app/dashboard/invoices/page.tsx`: `title: 'Invoices'` → "Invoices | Acme Dashboard"
+  - `/app/dashboard/customers/page.tsx`: `title: 'Customers'` → "Customers | Acme Dashboard"
+
+**メタデータの種類:**
+- **Title metadata**: ブラウザタブに表示、検索結果のタイトル
+- **Description metadata**: 検索結果の説明文
+- **Open Graph metadata**: SNSシェア時のプレビュー（今回は未実装）
+- **Favicon metadata**: ブラウザタブのアイコン（Next.jsが自動処理）
+
+**ベストプラクティス:**
+- ルートレイアウトでテンプレートを定義
+- 各ページでは簡潔なタイトルのみを指定
+- descriptionは具体的で有用な情報を含める
+- 一貫性のあるメタデータで全ページをカバー
+
 ---
 
 ## 🚧 現在の進行状況
 
-**現在地**: Chapter 14 - フォームバリデーション
+**現在地**: 公式チュートリアル完了！🎉
 
-**次にやること:**
-- クライアントサイドバリデーション
-- サーバーサイドバリデーション
-- useFormStateの使用
+**達成したこと:**
+- Next.js App Routerの基礎から応用まで習得
+- 認証、データ変更、エラーハンドリング、SEO最適化を実装
+- 本番環境へのデプロイ完了
+
+**次のステップ:**
+- オリジナル機能の追加
+- コードのリファクタリング
+- テストの追加
+- パフォーマンス最適化
 
 ---
 
@@ -249,9 +398,9 @@
 - [x] Chapter 13: エラーハンドリング
 
 ### Phase 3: 高度な機能
-- [ ] Chapter 14: フォームバリデーション
-- [ ] Chapter 15: 認証
-- [ ] Chapter 16: メタデータ
+- [x] Chapter 14: フォームバリデーション
+- [x] Chapter 15: 認証
+- [x] Chapter 16: メタデータ
 
 ### Phase 4: 独自実装
 - [ ] カスタム機能の追加
@@ -323,6 +472,15 @@
 | Dynamic Routes | ⭐⭐⭐⭐☆ | [id]で動的ルートを実装 |
 | Error Handling | ⭐⭐⭐⭐☆ | try-catch、error.tsx、not-found.tsx |
 | Error Boundary | ⭐⭐⭐⭐☆ | error.tsxで予期しないエラーをキャッチ |
+| Form Validation | ⭐⭐⭐⭐☆ | Zod safeParse()でサーバーサイドバリデーション |
+| useActionState | ⭐⭐⭐⭐☆ | React 19の新しいフォーム状態管理フック |
+| Accessibility (ARIA) | ⭐⭐⭐⭐☆ | aria-describedby、aria-liveでスクリーンリーダー対応 |
+| Authentication (NextAuth.js) | ⭐⭐⭐⭐☆ | NextAuth.js v5でCredentials Provider実装 |
+| Middleware | ⭐⭐⭐⭐☆ | 認証状態チェックとルート保護 |
+| Password Hashing (bcrypt) | ⭐⭐⭐⭐☆ | bcrypt.compare()でセキュアなパスワード検証 |
+| Session Management | ⭐⭐⭐⭐☆ | NextAuth.jsの自動セッション管理 |
+| Metadata API | ⭐⭐⭐⭐☆ | titleテンプレートでページタイトル管理 |
+| SEO Optimization | ⭐⭐⭐⭐☆ | メタデータでSEOとソーシャルメディア対応 |
 
 ---
 

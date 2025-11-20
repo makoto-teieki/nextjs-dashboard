@@ -4,7 +4,7 @@ Next.js App Router Courseの学習を通じて構築したダッシュボード�
 
 ## 🚀 デプロイ
 
-- **本番環境**: https://nextjs-dashboard-[your-vercel-url].vercel.app
+- **本番環境**: https://nextjs-dashboard-makoto-teiekis-projects.vercel.app
 - **リポジトリ**: https://github.com/makoto-teieki/nextjs-dashboard
 
 ## 📚 プロジェクトドキュメント
