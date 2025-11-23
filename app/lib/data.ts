@@ -8,8 +8,9 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
+import { env } from '@/env';
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(env.POSTGRES_URL, { ssl: 'require' });
 
 export async function fetchRevenue() {
   try {

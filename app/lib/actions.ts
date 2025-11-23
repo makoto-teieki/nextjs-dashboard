@@ -6,8 +6,9 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
+import { env } from '@/env';
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(env.POSTGRES_URL, { ssl: 'require' });
 
 const FormSchema = z.object({
   id: z.string(),

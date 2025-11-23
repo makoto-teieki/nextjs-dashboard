@@ -13,6 +13,10 @@ const config: Config = {
   // Add more setup options before each test is run
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
+    // Mock env to avoid ESM issues with @t3-oss/env-nextjs (must be before @/* pattern)
+    '^<rootDir>/env$': '<rootDir>/__mocks__/env.ts',
+    '^@/env$': '<rootDir>/__mocks__/env.ts',
+    '^\\.\\./\\.\\./env$': '<rootDir>/__mocks__/env.ts',
     // Handle module aliases (this will be automatically configured for you soon)
     '^@/(.*)$': '<rootDir>/$1',
     // Mock next-auth to avoid ESM issues
