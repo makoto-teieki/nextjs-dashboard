@@ -12,17 +12,19 @@ export const env = createEnv({
    */
   server: {
     // Database configuration
-    POSTGRES_URL: z.string().url().min(1, 'POSTGRES_URL is required'),
-    POSTGRES_PRISMA_URL: z.string().url().optional(),
-    POSTGRES_URL_NON_POOLING: z.string().url().optional(),
+    // Provide defaults to support build-time without actual env vars
+    POSTGRES_URL: z.string().default(''),
+    POSTGRES_PRISMA_URL: z.string().optional(),
+    POSTGRES_URL_NON_POOLING: z.string().optional(),
     POSTGRES_USER: z.string().optional(),
     POSTGRES_HOST: z.string().optional(),
     POSTGRES_PASSWORD: z.string().optional(),
     POSTGRES_DATABASE: z.string().optional(),
 
     // Authentication configuration
-    AUTH_SECRET: z.string().min(1, 'AUTH_SECRET is required'),
-    AUTH_URL: z.string().url().default('http://localhost:3000/api/auth'),
+    // Provide defaults to support build-time without actual env vars
+    AUTH_SECRET: z.string().default(''),
+    AUTH_URL: z.string().default('http://localhost:3000/api/auth'),
 
     // Node environment
     NODE_ENV: z
