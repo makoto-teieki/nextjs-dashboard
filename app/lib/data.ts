@@ -68,10 +68,10 @@ export async function fetchCardData() {
       invoiceStatusPromise,
     ]);
 
-    const numberOfInvoices = Number(data[0][0].count ?? '0');
-    const numberOfCustomers = Number(data[1][0].count ?? '0');
-    const totalPaidInvoices = formatCurrency(data[2][0].paid ?? '0');
-    const totalPendingInvoices = formatCurrency(data[2][0].pending ?? '0');
+    const numberOfInvoices = Number(data[0]![0]!.count ?? '0');
+    const numberOfCustomers = Number(data[1]![0]!.count ?? '0');
+    const totalPaidInvoices = formatCurrency(data[2]![0]!.paid ?? '0');
+    const totalPendingInvoices = formatCurrency(data[2]![0]!.pending ?? '0');
 
     return {
       numberOfCustomers,
@@ -134,7 +134,7 @@ export async function fetchInvoicesPages(query: string) {
       invoices.status ILIKE ${`%${query}%`}
   `;
 
-    const totalPages = Math.ceil(Number(data[0].count) / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(Number(data[0]!.count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
