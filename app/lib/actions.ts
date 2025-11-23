@@ -4,7 +4,7 @@ import { z } from 'zod';
 import postgres from 'postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
@@ -129,7 +129,10 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
-    await signIn('credentials', formData);
+    await signIn('credentials', {
+      redirect: false,
+      ...Object.fromEntries(formData),
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -141,4 +144,10 @@ export async function authenticate(
     }
     throw error;
   }
+  redirect('/dashboard');
+}
+
+export async function logout() {
+  await signOut({ redirect: false });
+  redirect('/login');
 }
