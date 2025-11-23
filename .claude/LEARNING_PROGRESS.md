@@ -1,6 +1,6 @@
 # Next.js学習進捗
 
-最終更新: 2025-11-22
+最終更新: 2025-11-23
 
 > **📚 他のドキュメント**: プロジェクト全体のドキュメント一覧は [README.md](./README.md) を参照してください。
 
@@ -497,35 +497,29 @@
 
 ## 🚧 現在の進行状況
 
-**現在地**: Phase 4A - テスティング基盤の構築 ✅ **完了！**
+**現在地**: Phase 4B - コード品質の向上 🚀 **進行中（3/6完了）**
 
 **達成したこと:**
 - Next.js App Routerの基礎から応用まで習得（Chapters 1-16完了）
 - 認証、データ変更、エラーハンドリング、SEO最適化を実装
 - 本番環境へのデプロイ完了
-- **Jest + React Testing Libraryセットアップ完了**
-- **72個のユニット/統合テスト作成（全てパス）**
-- **主要機能のカバレッジ確保**（utils 100%, forms 96%+）
-- **Playwrightセットアップ完了**
-- **16個のE2Eテスト作成（全てパス）**
-- **E2E認証問題を完全解決**
-- **合計88テスト全て合格達成！**
+- **合計88テスト全て合格達成！**（ユニット/統合72 + E2E16）
+- **TypeScript strict mode強化完了**（4つの厳格オプション追加）
+- **型安全な環境変数管理を実装**（@t3-oss/env-nextjs + zod）
+- **再利用可能なカスタムフック作成**（useSearchParam, useDebouncedSearch）
 
 **完了:**
 - ✅ Phase 4A: テスティング基盤の構築（9/9完了）
-  - ✅ Jest + React Testing Library
-  - ✅ Utilityファイルのユニットテスト
-  - ✅ Server Actionsのテスト
-  - ✅ Zodバリデーション
-  - ✅ Formコンポーネント
-  - ✅ Playwrightのセットアップ（E2E）
-  - ✅ 主要ユーザーフローのE2Eテスト
-  - ✅ E2E認証問題の解決
-  - ✅ NextAuth v5リダイレクト処理の理解と実装
+  - Jest + React Testing Library、E2E（Playwright）、88/88テスト合格
+- 🚧 Phase 4B: コード品質の向上（3/6完了）
+  - ✅ TypeScript strict modeの強化
+  - ✅ Type-safe環境変数（@t3-oss/env-nextjs）
+  - ✅ 共通ロジックの抽出とカスタムフック作成
 
 **次のステップ:**
-- Phase 4B: コード品質の向上へ
-- または別のプロジェクトへ進む
+- Phase 4B残りタスク: コンポーネント分割、コードレビューチェックリスト、PRテンプレート
+- Phase 4C: パフォーマンス最適化
+- Phase 4D: 機能拡張
 
 ---
 
@@ -560,10 +554,17 @@
 - [x] NextAuth v5リダイレクト処理の理解と実装
 - [x] **最終結果: 88/88テスト全て合格**
 
-### Phase 4B: コード品質の向上
-- [ ] TypeScript strict modeの有効化
-- [ ] Type-safe環境変数（zod + t3-env）
-- [ ] 共通ロジックの抽出とカスタムフック作成
+### Phase 4B: コード品質の向上（3/6完了）
+- [x] TypeScript strict modeの強化
+  - `noUncheckedIndexedAccess`, `noImplicitReturns`, `noFallthroughCasesInSwitch`, `forceConsistentCasingInFileNames`
+  - 19箇所の型エラーを修正
+- [x] Type-safe環境変数（@t3-oss/env-nextjs + zod）
+  - `env.ts`でスキーマ定義、実行時バリデーション
+  - すべての`process.env`を型安全な`env`に置き換え
+- [x] 共通ロジックの抽出とカスタムフック作成
+  - `useSearchParam`: URLパラメータ管理
+  - `useDebouncedSearch`: デバウンス付き検索
+  - `app/ui/search.tsx`: 40行 → 25行（37.5%削減）
 - [ ] コンポーネントの適切な分割
 - [ ] セルフコードレビューチェックリスト作成
 - [ ] PRテンプレートの作成
@@ -653,7 +654,9 @@
 | Client Hooks (useSearchParams等) | ⭐⭐⭐⭐☆ | useSearchParams, usePathname, useRouter |
 | Debouncing | ⭐⭐⭐⭐☆ | use-debounceでパフォーマンス最適化 |
 | Deployment (Vercel) | ⭐⭐⭐⭐☆ | GitHubからVercelへのデプロイを実践 |
-| Environment Variables | ⭐⭐⭐☆☆ | .env.localでローカル設定 |
+| Environment Variables | ⭐⭐⭐⭐⭐ | @t3-oss/env-nextjsで型安全な環境変数管理 |
+| TypeScript Strict Mode | ⭐⭐⭐⭐☆ | noUncheckedIndexedAccessなど4つの厳格オプション |
+| Custom Hooks | ⭐⭐⭐⭐☆ | useSearchParam, useDebouncedSearchを作成 |
 | Server Actions | ⭐⭐⭐⭐☆ | 'use server'でサーバー関数を定義 |
 | Zod Validation | ⭐⭐⭐⭐☆ | フォームデータのスキーマ検証 |
 | Data Mutation | ⭐⭐⭐⭐☆ | 作成・更新・削除をServer Actionsで実装 |
@@ -680,8 +683,6 @@
 | Playwright | ⭐⭐⭐⭐⭐ | E2Eテスト環境構築、16テスト作成・全て合格 |
 | E2E Testing | ⭐⭐⭐⭐⭐ | 認証フロー、CRUD操作の実ユーザーフローテスト |
 | NextAuth v5 Redirects | ⭐⭐⭐⭐⭐ | Server Actionsでの`redirect: false`パターン習得 |
-| Playwright | ⭐⭐⭐⭐☆ | ブラウザ自動化によるE2Eテスト |
-| E2E Testing | ⭐⭐⭐⭐☆ | エンドツーエンドのユーザーフローテスト |
 
 ---
 
